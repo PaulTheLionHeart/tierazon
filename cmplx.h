@@ -43,16 +43,28 @@ public:
          {
          *this=cmplx(rvalue*x, rvalue*y);//return *this;
          }
-  inline cmplx& operator+(cmplx& rvalue)
-         {return cmplx(x+rvalue.x,y+rvalue.y);}
-  inline cmplx& operator-(cmplx& rvalue)
-         {return cmplx(x-rvalue.x,y-rvalue.y);}
-  inline cmplx& operator-() //unary minus
-         {return cmplx(-x,-y);}
-  inline cmplx& operator*(cmplx rvalue)
-         {return cmplx(
-          rvalue.x*x-rvalue.y*y,
-          rvalue.x*y+rvalue.y*x);}
+  inline cmplx operator+(cmplx& rvalue)
+      {
+      return cmplx(x + rvalue.x, y + rvalue.y);
+      }
+
+  inline cmplx operator-(cmplx& rvalue)
+      {
+      return cmplx(x - rvalue.x, y - rvalue.y);
+      }
+
+  inline cmplx operator-() //unary minus
+      {
+      return cmplx(-x, -y);
+      }
+
+  inline cmplx operator*(cmplx rvalue)
+      {
+      return cmplx(
+          rvalue.x * x - rvalue.y * y,
+          rvalue.x * y + rvalue.y * x);
+      }
+
   inline friend cmplx operator/(double dividend,cmplx divisor)
          { 
           return cmplx((dividend*divisor.x)/(divisor.x*divisor.x+divisor.y*divisor.y),

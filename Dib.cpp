@@ -28,12 +28,12 @@ CDIB::~CDIB()
 
 	if (m_pDIB)
 	{
-		delete m_pDIB;
+		delete [] m_pDIB;
 	}
 
 	if (m_pDIB_Temp)
 	{
-		delete m_pDIB_Temp;
+		delete [] m_pDIB_Temp;
 	}
 }
 
@@ -132,7 +132,7 @@ BOOL CDIB::Open(const char* pzFileName)
 		goto bail;
 
 	if (m_pDIB)
-		delete m_pDIB;
+		delete [] m_pDIB;
 
 	// Allocate a big chunk of global memory to store the DIB
 	m_pDIB = (BYTE *) new char[bmpfh.bfSize - nHeaderSize];
@@ -276,7 +276,7 @@ BOOL CDIB::CreateDIB(DWORD cx, DWORD cy)
 	}
 
 	if (m_pDIB)
-		delete m_pDIB;
+		delete [] m_pDIB;
 		
 	CWaitCursor cursor;	// this will automatically display a wait cursor
 	// Allocate a big chunk of global memory to store the DIB
@@ -349,7 +349,7 @@ BOOL CDIB::CreateDIB_Temp(DWORD cx, DWORD cy)
 	//	goto bail;
 
 	if (m_pDIB_Temp)
-		delete m_pDIB_Temp;
+		delete [] m_pDIB_Temp;
 		
 	CWaitCursor cursor;	// this will automatically display a wait cursor
 	// Allocate a big chunk of global memory to store the Temp DIB
@@ -963,7 +963,7 @@ BOOL CDIB::CopyTemp()
 
 		}
 		
-		//delete m_pDIB;
+		//delete [] m_pDIB;
 		//m_pDIB = m_pDIB_Temp;
 		//m_pDIB_Temp = NULL;
 

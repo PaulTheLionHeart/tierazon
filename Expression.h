@@ -22,8 +22,8 @@ class MExpression							// abstract base class
 
 		~MExpression()
 		{
-			if ( Operand1 ) delete Operand1;
-			if ( Operand2 ) delete Operand2;
+			if ( Operand1 ) delete [] Operand1;
+			if ( Operand2 ) delete [] Operand2;
 		}
 
 		virtual cmplx Do() = 0;	// pure virtual function

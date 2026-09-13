@@ -17,12 +17,6 @@ typedef struct tagRGB_IDATA
 	double bj;
 } RGB_IDATA;
 
-typedef RGB_IDATA (WINAPI *DLLFUNC) (double, double, double, double, int, int);
-typedef RGB_IDATA (WINAPI *DLLCOLOR) (int, int, int, double, double, double, double);
-typedef void (WINAPI *DLLINIT) (int, int, int, int, int, int, int, double, double, double, double, double, double*, double*, double*, double*, double*, double*, double*, int, int, int, int, int, int, int, int, int, int, int);
-typedef int (WINAPI *DLLFILTER) (double, double, int);
-typedef RGB_IDATA (WINAPI *DLLCOMPLETE) ();
-
 #include "cmplx.h"
 
 class   		CGradient;
@@ -41,14 +35,7 @@ public:
 
 // Operations
 public:
-	// DLL parameters /////////////////////////
 	HINSTANCE			hLib{};
-
-  DLLFUNC				lpfnFormulae;
-	DLLCOLOR			lpfnColorUpdate;
-	DLLINIT				lpfnInitialize;
-	DLLFILTER			lpfnFilter;
-	DLLCOMPLETE		lpfnComplete;
 
 	RGB_IDATA			rgbColor;
 	
@@ -423,27 +410,18 @@ public:
 	void OnEditUndofractalselection();
 	void ConvolutionDialog();
 	void UpdateColorMethod();
-	void Returning_From_DLL();
+	void ProcessReturnedColour();
 	//void FDimension();
 
 	void UpdateMovieData();
 	void CloseAVIFile();
 	void GenerateAMovie();
 	void SaveForUndo();
-	void Load_DLL();
-
-	// DLL function calls
-	RGB_IDATA save_stdcall(DLLFUNC func, double cx, double cy, double zx, double zy, int px, int py);
-	RGB_IDATA color_stdcall(DLLCOLOR func, int px, int py, int nColorMethod, double cx, double cy, double zx, double zy);
-	void init_stdcall(DLLINIT func, int nFormula, int nFilter, int nColorMethod, int dBailout, int NMAX, int _jul, int _jul_save, double _dStrands, double _dBay100, double _dBay1000, double _dLower, double _dUpper, double *pXTemp, double *pYTemp, double *pXSave, double *pYSave, double *rjData, double *gjData, double *bjData, int nRed, int nGrn, int nBlu, int nRedStart, int nGrnStart, int nBluStart, int nFDOption, int bDimensionVariant, int size_x, int size_y, int nUsingBuffers);
-	int filter_stdcall(DLLFILTER func, double zx, double zy, int i);
-	RGB_IDATA complete_stdcall(DLLCOMPLETE func);
 
 	///////////////////////////////////////////////////////////////////
 	// Modeless Dialog message routines
-	long OnApply_GradView(UINT wParam, LONG lParam);
-	long OnApply_ShiftView(UINT wParam, LONG lParam);
-	long OnApply_AffineView(UINT wParam, LONG lParam);
+	LRESULT OnApply_GradView(WPARAM wParam, LPARAM lParam);
+	LRESULT OnApply_ShiftView(WPARAM wParam, LPARAM lParam);
 
   // Formulae Parser Functions
   //cmplx ParseExpression( const char* str, int& index );
@@ -480,7 +458,7 @@ protected:
 protected:
 	afx_msg void OnContextMenu(CWnd*, CPoint point);
 	//{{AFX_MSG(CTierazonView)
-	afx_msg LONG CancelMovie(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT CancelMovie(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnSaveDib();
 	afx_msg void OnWindowSizedesktop();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);

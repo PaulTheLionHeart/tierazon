@@ -9,10 +9,57 @@
 /////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-#define STRICT
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <math.h>
+#include <complex>
+
+using Complex = std::complex<double>;
+
+inline Complex operator+(const Complex& a, int b)
+    {
+    return a + static_cast<double>(b);
+    }
+
+inline Complex operator+(int a, const Complex& b)
+    {
+    return static_cast<double>(a) + b;
+    }
+
+inline Complex operator-(const Complex& a, int b)
+    {
+    return a - static_cast<double>(b);
+    }
+
+inline Complex operator-(int a, const Complex& b)
+    {
+    return Complex(static_cast<double>(a), 0.0) - b;
+    }
+
+inline Complex operator*(const Complex& a, int b)
+    {
+    return a * static_cast<double>(b);
+    }
+
+inline Complex operator*(int a, const Complex& b)
+    {
+    return static_cast<double>(a) * b;
+    }
+
+inline Complex operator/(const Complex& a, int b)
+    {
+    return a / static_cast<double>(b);
+    }
+
+inline Complex operator-(const Complex& a)
+    {
+    return Complex(-a.real(), -a.imag());
+    }
+
+inline Complex operator/(int a, const Complex& b)
+    {
+    return Complex(static_cast<double>(a), 0.0) / b;
+    }
 
 #define pi 3.141592653589793238462643383279
 #define rad 57.2958
@@ -29,118 +76,117 @@ typedef struct tagRGB_IDATA
 #define OFFSET_COLOR 64  //64
 
 // variable declarations
-__complex__ double z, z1, z2, z3, z4, z5, z8, zd, z12, z16, z24, z36, z48;
-__complex__ double c, c1, c2, c3;
-__complex__ double t, t1, t2, t3, X, Y, Z, C, ca, cb, ca2, caa3;
-__complex__ double ci1;
+extern Complex z, z1, z2, z3, z4, z5, z8, zd, z12, z16, z24, z36, z48;
+extern Complex c, c1, c2, c3;
+extern Complex t, t1, t2, t3, X, Y, Z, C, ca, cb, ca2, caa3;
+extern Complex ci1;
 
 // debug string attributes
-char cstr[100];
-int bug;
+extern char cstr[100];
+extern int bug;
 
 // FDimension Data array pointers
-double				*pXTemp;
-double				*pYTemp;
+extern double				*pXTemp;
+extern double				*pYTemp;
 
 // Color method save buffers
-double				*pXSave;
-double				*pYSave;
+extern double				*pXSave;
+extern double				*pYSave;
 
-double				*rjData;
-double				*gjData;
-double				*bjData;
+extern double				*rjData;
+extern double				*gjData;
+extern double				*bjData;
 
-int						size_x, size_y;
-int						px, py;
+extern int						size_x, size_y;
+extern int						px, py;
 
-int						nUsingBuffers;
+extern int						nUsingBuffers;
 
 // formula attributes
-int formula, filter, bailout, maxit, n_color, maxit_save, nFDOption;
-int jul, jul_save;
+extern int formula, filter, bailout, maxit, n_color, maxit_save, nFDOption;
+extern int jul, jul_save;
 
-double d, minsize, maxsize;
-int nRed, nGrn, nBlu, nRedStart, nGrnStart, nBluStart;
+extern double d, minsize, maxsize;
+extern int nRed, nGrn, nBlu, nRedStart, nGrnStart, nBluStart;
 
-double mx, my, zz;
+extern double mx, my, zz;
 
 // Color attributes
-RGB_IDATA rgbColor;
-double rj, gj, bj;
-int nColorMethod;
+extern RGB_IDATA rgbColor;
+extern double rj, gj, bj;
+extern int nColorMethod;
 
 // filter attributes
-int i, j, n_color, n_color_x, n_color_y, n_color_z, n_color_z1;
-double m_lower, m_upper;
+extern int i, j, n_color_x, n_color_y, n_color_z, n_color_z1;
+extern double m_lower, m_upper;
 
-double d_color, d_color_x, d_color_y, d_color_z;
-double xavg, yavg, zavg, zsav, xsav, ysav, xdif, ydif, zdif;
-double zmin, zmax, zsav1, xsav_, ysav_;
-double dt, dif_test, dStrands, dFactor, dFactor_2;
-double limit, dStrands_HI, dStrands_LO;
-double dStrands_HI_cx, dStrands_LO_cx;
-double dStrands_HI_cy, dStrands_LO_cy;
-double dStrands_cxd, dStrands_cyd;
-double dStrands_df, limit_cxd, limit_cyd;
+extern double d_color, d_color_x, d_color_y, d_color_z;
+extern double xavg, yavg, zavg, zsav, xsav, ysav, xdif, ydif, zdif;
+extern double zmin, zmax, zsav1, xsav_, ysav_;
+extern double dt, dif_test, dStrands, dFactor, dFactor_2;
+extern double limit, dStrands_HI, dStrands_LO;
+extern double dStrands_HI_cx, dStrands_LO_cx;
+extern double dStrands_HI_cy, dStrands_LO_cy;
+extern double dStrands_cxd, dStrands_cyd;
+extern double dStrands_df, limit_cxd, limit_cyd;
 
-double avg, tot, sav, dif, ssq1, ssq2;
-double dif_save;
-double ztot, xtot, ytot;
-double d_real, d_imag;
-double dzx, dzy;
-double a, b, x, y;
-double zx_save, zy_save;
+extern double avg, tot, sav, dif, ssq1, ssq2;
+extern double dif_save;
+extern double ztot, xtot, ytot;
+extern double d_real, d_imag;
+extern double dzx, dzy;
+extern double a, b, x, y;
+extern double zx_save, zy_save;
 
-double dzx_save, dzy_save;
-double temp, x_size, y_size, deg;
+extern double dzx_save, dzy_save;
+extern double temp, x_size, y_size, deg;
 
 ///////////////////////////////////////////	
 // Fractal dimension variables
-int						i2, jrw, bDimensionVariant;
-double				x_std, y_std, dm, da;
-double				denominator, x_rmin, x_rmax, y_rmin, y_rmax;
+extern int						i2, jrw, bDimensionVariant;
+extern double				x_std, y_std, dm, da;
+extern double				denominator, x_rmin, x_rmax, y_rmin, y_rmax;
 
 // Data array pointers
-double				*pXTemp;
-double				*pYTemp;
+//double				*pXTemp;
+//double				*pYTemp;
 
-__complex__   z_std;
+extern Complex    z_std;
 
-__complex__   z_rmin;
-__complex__   z_rmax;
+extern Complex    z_rmin;
+extern Complex    z_rmax;
 
-__complex__		cx_std;
-__complex__		cy_std;
-__complex__		cz_std;
+extern Complex 		cx_std;
+extern Complex 		cy_std;
+extern Complex 		cz_std;
 
-__complex__		cFDx;
-__complex__		cFDy;
-__complex__		cFDz;
+extern Complex 		cFDx;
+extern Complex 		cFDy;
+extern Complex 		cFDz;
 
-__complex__		cRng_x;
-__complex__		cRng_y;
-__complex__		cRng_z;
+extern Complex 		cRng_x;
+extern Complex 		cRng_y;
+extern Complex 		cRng_z;
 
-__complex__		cNMAX;
+extern Complex 		cNMAX;
 
-double				dFDx;	// Fractal Dimension x
-double				dFDy; // Fractal Dimension y
-double				dFDz; // Fractal Dimension z
+extern double				dFDx;	// Fractal Dimension x
+extern double				dFDy; // Fractal Dimension y
+extern double				dFDz; // Fractal Dimension z
 
-double				dFDx_0;	// Initial F Dimension x
-double				dFDy_0; // Initial F Dimension y
+extern double				dFDx_0;	// Initial F Dimension x
+extern double				dFDy_0; // Initial F Dimension y
 
-int						nDIter_x;
-int						nDIter_y;
-int						nFDOption;
-int						NMAX_Save;
-int						min, max;
-int						ntemp;
+extern int						nDIter_x;
+extern int						nDIter_y;
+extern int						NMAX_Save;
+extern int						min, max;
+extern int						ntemp;
 
 // Average variables
-double				x_mean;
-double				y_mean;
-__complex__		z_mean;
+extern double				x_mean;
+extern double				y_mean;
+extern Complex 		z_mean;
 
 ///////////////////////////////////
 // implementions
@@ -151,13 +197,13 @@ void Do_Filter();
 void Filter_Complete();
 
 // Complex functions
-__complex__ double clog_z();
-__complex__ double clog_t();
-__complex__ double ccos_z();
-__complex__ double ccos_c();
-__complex__ double csin_z();
-__complex__ double csin_t();
-__complex__ double cexp_z();
+Complex  clog_z();
+Complex  clog_t();
+Complex  ccos_z();
+Complex  ccos_c();
+Complex  csin_z();
+Complex  csin_t();
+Complex  cexp_z();
 
 double sum_sqrs_z();
 double sum_sqrs_c();
@@ -268,6 +314,7 @@ void Formula_96();
 void Formula_97();
 void Formula_98();
 void Formula_99();
+void Formula_100(); 
 void Formula_101();
 void Formula_102();
 void Formula_103();

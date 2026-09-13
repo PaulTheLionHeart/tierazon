@@ -59,6 +59,32 @@ public:
 #define ID_SHIFTFORWARD				(WM_USER + 11)
 #define WM_USER_CANCELMOVIE		(WM_USER + 12)
 
+// here are the defines we can use to specify changes from the original version
+
+//#define USE_TIERAZON_COLOURS
+#define USE_MANPWIN_DEFAULT_PALETTE
+
+//#define USE_TIERAZON_INITIAL_SIZE
+#define USE_UPDATED_INITIAL_SIZE
+
+#define REMOVE_TIERAZON_BLOB
+//#define ALLOW_TIERAZON_BLOB
+
+#if defined(USE_TIERAZON_COLOURS) && defined(USE_MANPWIN_DEFAULT_PALETTE)
+#error Define only one palette option
+#endif
+
+#if defined(USE_TIERAZON_INITIAL_SIZE) && defined(USE_UPDATED_INITIAL_SIZE)
+#error Define only one initial-size option
+#endif
+
+#if defined(REMOVE_TIERAZON_BLOB) && defined(ALLOW_TIERAZON_BLOB)
+#error Define only one palette option
+#endif
+
+
+
+
 /////////////////////////////////////////////////////////////////////////////
 
 //{{AFX_INSERT_LOCATION}}

@@ -571,7 +571,6 @@ BEGIN_MESSAGE_MAP(CTierazonView, CScrollView)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_UNDO, OnUpdateDrawUndo)
 	ON_COMMAND(ID_FILTER_50, OnFilter50)
 	ON_UPDATE_COMMAND_UI(ID_FILTER_50, OnUpdateFilter50)
-	ON_COMMAND(ID_LOAD_DLL, OnLoadDll)
 	ON_COMMAND(ID_FILTER_51, OnFilter51)
 	ON_UPDATE_COMMAND_UI(ID_FILTER_51, OnUpdateFilter51)
 	ON_COMMAND(ID_FILTER_52, OnFilter52)
@@ -790,10 +789,6 @@ CTierazonView::CTierazonView()
   
   strFormulae = "z*z+c";
 
-	// DLL initialization
-	szTemp = "rsx_fv25.dll";
-	Load_DLL();
-
 	nDistortion_sav = nDistortion;
 	nFilter_sav = nFilter;
 	nColorMethod_sav = nColorMethod;
@@ -802,42 +797,42 @@ CTierazonView::CTierazonView()
 
 CTierazonView::~CTierazonView()
 {
-	delete m_pGradView;
-	delete m_pConvolutView;
-	delete m_pMovieView;
+	delete [] m_pGradView;
+	delete [] m_pConvolutView;
+	delete [] m_pMovieView;
 
 	if (bRed)
-		delete bRed;
+		delete[] bRed;
 	if (bGrn)
-		delete bGrn;
+		delete[] bGrn;
 	if (bBlu)
-		delete bBlu;
+		delete[] bBlu;
 
 	if (iIter_Data)
-		delete iIter_Data;
+		delete[] iIter_Data;
 	if (rIter_Data)
-		delete rIter_Data;
+		delete[] rIter_Data;
 	if (gIter_Data)
-		delete gIter_Data;
+		delete[] gIter_Data;
 	if (bIter_Data)
-		delete bIter_Data;
+		delete[] bIter_Data;
 
 	if (rjData)
-		delete rjData;
+		delete[]  rjData;
 	if (gjData)
-		delete gjData;
+		delete[]  gjData;
 	if (bjData)
-		delete bjData;
+		delete[]  bjData;
 
 	if (pXSave)
-		delete pXSave;
+		delete[] pXSave;
 	if (pYSave)
-		delete pYSave;
+		delete[] pYSave;
 
 	if (pXTemp)
-		delete pXTemp;
+		delete[] pXTemp;
 	if (pYTemp)
-		delete pYTemp;
+		delete[] pYTemp;
 
   FreeLibrary(hLib);
 }
@@ -2907,7 +2902,7 @@ void CTierazonView::OnUpdateDrawAbort(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bDraw);	
 }
 
-long CTierazonView::OnApply_ShiftView(UINT wParam, LONG lParam)
+LRESULT CTierazonView::OnApply_ShiftView(WPARAM wParam, LPARAM lParam)
 {
 	if (dim.cx > 640 || dim.cy > 480)
 		return 0L;
@@ -3205,7 +3200,7 @@ void CTierazonView::OnUpdateImageColorparameters(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bInitialized);
 }
 
-long CTierazonView::OnApply_GradView(UINT wParam, LONG lParam)
+LRESULT CTierazonView::OnApply_GradView(WPARAM wParam, LPARAM lParam)
 {
 	if (dim.cx > 640 || dim.cy > 480)
 		return 0L;
@@ -3348,80 +3343,6 @@ void CTierazonView::SaveForUndo()
 	nFilter_sav				= nFilter;
 	nColorMethod_sav	= nColorMethod;
 	nFDOption_sav			= nFDOption;
-}
-
-void CTierazonView::OnLoadDll() 
-{
-	// DLL initialization
-
-	CFileDialog dlg
-	    (TRUE,
-	   	"*.dll",
-	   	szTemp,          
-	     OFN_HIDEREADONLY,
-	    "Fractal DLL Files (*.dll)|*.dll|All Files (*.*)|*.*||");
-
-  if (dlg.DoModal() == IDOK)
-  	szTemp = dlg.GetPathName();              
-	{	
-		Load_DLL();
-	}		
-}
-
-void CTierazonView::Load_DLL()
-{
-	if (hLib)
-	{
-	    FreeLibrary(hLib);
-	}
-  hLib = LoadLibrary(szTemp);
-  if (!hLib) 
-	{
-		DWORD err = GetLastError();
-    wsprintf(buf, "Cannot load dll fails err=0x%lX = %ld", err, err);
-		AfxMessageBox(buf);
-        return;
-  }
-
-  lpfnFormulae = (DLLFUNC) GetProcAddress(hLib, "_formulae");
-  if (!lpfnFormulae) 
-	{
-		wsprintf(buf, "Error: GetProcAddress(_formulae)");
-		AfxMessageBox(buf);
-		return;
-  }
-
-  lpfnColorUpdate = (DLLCOLOR) GetProcAddress(hLib, "_color_update");
-  if (!lpfnColorUpdate) 
-	{
-		wsprintf(buf, "Error: GetProcAddress(_color_update)");
-		AfxMessageBox(buf);
-		return;
-  }
-
-  lpfnInitialize = (DLLINIT) GetProcAddress(hLib, "_initialize");
-  if (!lpfnFormulae) 
-	{
-		wsprintf(buf, "Error: GetProcAddress(_initialize)");
-		AfxMessageBox(buf);
-		return;
-  }
-
-  lpfnFilter = (DLLFILTER) GetProcAddress(hLib, "_filter");
-  if (!lpfnFilter) 
-	{
-		wsprintf(buf, "Error: GetProcAddress(_filter)");
-		AfxMessageBox(buf);
-		return;
-  }
-
-  lpfnComplete = (DLLCOMPLETE) GetProcAddress(hLib, "_filter_complete");
-  if (!lpfnComplete) 
-	{
-		wsprintf(buf, "Error: GetProcAddress(_filter_complete)");
-		AfxMessageBox(buf);
-		return;
-  }
 }
 
 void CTierazonView::OnColorRegular() 

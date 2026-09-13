@@ -9,15 +9,22 @@
 #include <math.h>
 #include "external.h"
 
-void CTierazonView::init_stdcall(DLLINIT func, int nFormula, int nFilter, int nColorMethod, int dBailout, int NMAX, int _jul, int _jul_save, double _dStrands, double dBay100, double dBay1000, double dLower, double dUpper, double *pXTemp, double *pYTemp, double *pXSave, double *pYSave, double *rjData, double *gjData, double *bjData, int nRed, int nGrn, int nBlu, int nRedStart, int nGrnStart, int nBluStart, int nFDOption, int bDimensionVariant, int size_x, int size_y, int nUsingBuffers)
-{
-	(*func) (nFormula, nFilter, nColorMethod, dBailout, NMAX, jul, jul_save, dStrands, dBay100, dBay1000, dLower, dUpper, pXTemp, pYTemp, pXSave, pYSave, rjData, gjData, bjData, nRed, nGrn, nBlu, nRedStart, nGrnStart, nBluStart, nFDOption, bDimensionVariant, size_x, size_y, nUsingBuffers);
-}
+void CALLBACK _initialize(
+    int nDistortion, int nFilter, int nColorMethod,
+    int dBailout, int NMAX, int _jul, int _jul_save,
+    double _dStrands, double dBay100, double dBay1000,
+    double dLower, double dUpper,
+    double* pXTemp, double* pYTemp,
+    double* pXSave, double* pYSave,
+    double* rjData, double* gjData, double* bjData,
+    int nRed, int nGrn, int nBlu,
+    int nRedStart, int nGrnStart, int nBluStart,
+    int nFDOption, int bDimensionVariant,
+    int size_x, int size_y, int nUsingBuffers);
 
-RGB_IDATA CTierazonView::color_stdcall(DLLCOLOR func, int px, int py, int nColorMethod, double cx, double cy, double zx, double zy)
-{
-  return (*func) (px, py, nColorMethod, cx, cy, zx, zy);
-}
+RGB_IDATA CALLBACK _color_update(
+    int px, int py, int nColorMethod,
+    double cx, double cy, double zx, double zy);
 
 void CTierazonView::DrawPattern()  // Step 1
 {
@@ -217,11 +224,11 @@ void CTierazonView::GeneratePattern()
 		if (dim.cx <= 640 && dim.cy <= 480 && nUsingBuffers)
 		{				
 			if (bRed)
-				delete bRed;
+				delete [] bRed;
 			if (bGrn)
-				delete bGrn;
+				delete [] bGrn;
 			if (bBlu)
-				delete bBlu;
+				delete [] bBlu;
 
 			//AfxMessageBox("Initializing");
 			
@@ -230,35 +237,35 @@ void CTierazonView::GeneratePattern()
 			bBlu = (BOOL*) new BOOL[dim.cx*dim.cy];
 
 			if (pXSave)
-				delete pXSave;
+				delete [] pXSave;
 			if (pYSave)
-				delete pYSave;
+				delete [] pYSave;
 
 			pXSave = (double *) new double[dim.cx*dim.cy];
 			pYSave = (double *) new double[dim.cx*dim.cy];
 
 			if (rjData)
-				delete rjData;
+				delete [] rjData;
 			if (gjData)
-				delete gjData;
+				delete [] gjData;
 			if (bjData)
-				delete bjData;
+				delete [] bjData;
 
 			rjData = (double *) new double[dim.cx*dim.cy];
 			gjData = (double *) new double[dim.cx*dim.cy];
 			bjData = (double *) new double[dim.cx*dim.cy];
 
 			if (iIter_Data)
-				delete iIter_Data;
+				delete [] iIter_Data;
 
 			if (rIter_Data)
-				delete rIter_Data;
+				delete [] rIter_Data;
 
 			if (gIter_Data)
-				delete gIter_Data;
+				delete [] gIter_Data;
 
 			if (bIter_Data)
-				delete bIter_Data;
+				delete [] bIter_Data;
 			
 			iIter_Data = (int*) new int [dim.cx*dim.cy];
 			rIter_Data = (int*) new int [dim.cx*dim.cy];
@@ -324,9 +331,9 @@ void CTierazonView::GeneratePattern()
 	if (bMFilter)
 	{
 		if (pXTemp)
-			delete pXTemp;
+			delete [] pXTemp;
 		if (pYTemp)
-			delete pYTemp;
+			delete [] pYTemp;
 
 		pXTemp = (double *) new double[NMAX+1];
 		pYTemp = (double *) new double[NMAX+1];
@@ -339,16 +346,16 @@ void CTierazonView::GeneratePattern()
 	}			
 
 	///////////////////////////////////////////////////////////
-	init_stdcall(lpfnInitialize, nDistortion,
-							 nFilter, nColorMethod, dBailout,
-							 NMAX,jul, jul_save, dStrands, 
-							 dBay100, dBay1000, dLower, dUpper, 
-							 pXTemp, pYTemp, pXSave, pYSave, 
-							 rjData, gjData, bjData, 
-							 nRed, nGrn, nBlu, 
-							 nRedStart, nGrnStart, nBluStart, 
-							 nFDOption, bDimensionVariant, size_x, size_y,
-							 nUsingBuffers);
+	_initialize(nDistortion,
+	nFilter, nColorMethod, dBailout,
+	    NMAX, jul, jul_save, dStrands,
+	    dBay100, dBay1000, dLower, dUpper,
+	    pXTemp, pYTemp, pXSave, pYSave,
+	    rjData, gjData, bjData,
+	    nRed, nGrn, nBlu,
+	    nRedStart, nGrnStart, nBluStart,
+	    nFDOption, bDimensionVariant, size_x, size_y,
+	    nUsingBuffers);
 	///////////////////////////////////////////////////////////
 
 	// Launch The Drawing Pattern for the first time
@@ -460,13 +467,15 @@ void CTierazonView::UpdateColorMethod()
 	CTierazonDoc* pDoc = GetDocument();
 
 	/////////////////////////////////////////////////////*
-	rgbColor = color_stdcall(lpfnColorUpdate, px, py, nColorMethod, c.real(), c.imag(), z.real(), z.imag());			
+	rgbColor = _color_update(
+	    px, py, nColorMethod,
+	    c.real(), c.imag(), z.real(), z.imag());
 	/////////////////////////////////////////////////////*/
 	
 	if (dim.cx <= 640 && dim.cy <= 480 && nUsingBuffers)
 		i = iIter_Data[px + py*pDoc->m_sizeDoc.cx];
 
-	Returning_From_DLL();
+	ProcessReturnedColour();
 }
 				
 void CTierazonView::TestPatternSub()

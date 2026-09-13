@@ -10,21 +10,18 @@
 #include <math.h>
 #include "external.h"
 #include "xysize.h"
+#include "Default.h"
 
-RGB_IDATA CTierazonView::save_stdcall(DLLFUNC func, double cx, double cy, double zx, double zy, int px, int py)
-{
-  return (*func) (cx, cy, zx, zy, px, py);
-}
+RGB_IDATA CALLBACK _formulae(
+    double cx, double cy,
+    double zx, double zy,
+    int px, int py);
 
-int CTierazonView::filter_stdcall(DLLFILTER func, double zx, double zy, int i)
-{
-  return (*func) (zx, zy, i);
-}
+int CALLBACK _filter(
+    double zx, double zy,
+    int ncolor);
 
-RGB_IDATA CTierazonView::complete_stdcall(DLLCOMPLETE func)
-{
-  return (*func) ();
-}
+RGB_IDATA CALLBACK _filter_complete();
 
 //////////////////////////////////////////////////////////////////////
 void CTierazonView::TestEquations()
@@ -47,8 +44,8 @@ void CTierazonView::TestEquations()
 	//zy = z.imag();
 		
 	/////////////////////////////////////////////////////*
-	rgbColor = save_stdcall(lpfnFormulae, 
-						 c.real(), c.imag(), z.real(), z.imag(), px, py);			
+	rgbColor = _formulae(
+	    c.real(), c.imag(), z.real(), z.imag(), px, py);
 	/////////////////////////////////////////////////////*/
 
 	if (nDistortion == 101 || nDistortion == 118)  // formula editor
@@ -63,7 +60,7 @@ void CTierazonView::TestEquations()
 				{
 					z = ParsedExpr->Do();              
 					if (nFilter) 
-						i = filter_stdcall(lpfnFilter, z.real(), z.imag(), i);
+					    i = _filter(z.real(), z.imag(), i);
 				}
 				break;
 
@@ -74,14 +71,14 @@ void CTierazonView::TestEquations()
 					z2 = z;
 					z = ParsedExpr->Do();              
 					if (nFilter) 
-						i = filter_stdcall(lpfnFilter, z.real(), z.imag(), i);
+					    i = _filter(z.real(), z.imag(), i);
 				}
 				break;
 		}
 
 		if (nFilter) 
 		{
-			rgbColor = complete_stdcall(lpfnComplete); 
+		    rgbColor = _filter_complete();
 		}
 		else
 		{
@@ -98,11 +95,11 @@ void CTierazonView::TestEquations()
 	if (dim.cx <= 640 && dim.cy <= 480 && nUsingBuffers)
 		iIter_Data[px + py*pDoc->m_sizeDoc.cx] = i;
 
-	Returning_From_DLL();
+	ProcessReturnedColour();
 
 }
 
-void CTierazonView::Returning_From_DLL()
+void CTierazonView::ProcessReturnedColour()
 {
   CTierazonDoc* pDoc = GetDocument();
 
@@ -141,8 +138,25 @@ void CTierazonView::Returning_From_DLL()
 		red = grn = blu = 0;
 	}
 	else
-		Generalized_Coloring_Method();		
-	
+	    {
+#ifdef USE_MANPWIN_DEFAULT_PALETTE
+/*
+	    int ColourIndex = abs(i) % (int)colourCount;
+
+	    red = default_palette[ColourIndex * 3 + 0];
+	    grn = default_palette[ColourIndex * 3 + 1];
+	    blu = default_palette[ColourIndex * 3 + 2];
+*/
+
+	    red = default_palette[((BYTE)rj) * 3 + 0];
+	    grn = default_palette[((BYTE)gj) * 3 + 1];
+	    blu = default_palette[((BYTE)bj) * 3 + 2];
+
+#else
+	    Generalized_Coloring_Method();
+#endif
+	    }
+
 	if (dim.cx <= 640 && dim.cy <= 480 && nUsingBuffers)
 	{
 		//iIter_Data[px + py*pDoc->m_sizeDoc.cx] = i;

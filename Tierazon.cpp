@@ -73,9 +73,15 @@ BOOL CTierazonApp::InitInstance()
 	bAutoTile = FALSE;
 	bNewView = FALSE;
 	bZoomingMode = FALSE;
-	global_width	= 160;   // 320
+
+#ifdef USE_TIERAZON_INITIAL_SIZE
+	global_width = 160;   // 320
 	global_height = 120;	 // 240
-	
+#else
+	global_width = 1200;   // 320
+	global_height = 675;	 // 240
+#endif
+
 	bFitToPage = FALSE;
 	bStretchToFit = FALSE;
 
@@ -109,12 +115,13 @@ BOOL CTierazonApp::InitInstance()
 	//  of your final executable, you should remove from the following
 	//  the specific initialization routines you do not need.
 
+/*
 #ifdef _AFXDLL
 	Enable3dControls();			// Call this when using MFC in a shared DLL
 #else
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
-
+*/
 	// Change the registry key under which our settings are stored.
 	// You should modify this string to be something appropriate
 	// such as the name of your company or organization.
@@ -146,6 +153,17 @@ BOOL CTierazonApp::InitInstance()
 	// Dispatch commands specified on the command line
 	if (!ProcessShellCommand(cmdInfo))
 		return FALSE;
+
+#ifdef USE_UPDATED_INITIAL_SIZE
+
+	pMainFrame->SetWindowPos(
+	    NULL,
+	    0, 0,
+	    global_width + 120,
+	    global_height + 160,
+	    SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
+
+#endif
 
 	// The main window has been initialized, so show and update it.
 	//pMainFrame->ShowWindow(SW_SHOWMAXIMIZED);

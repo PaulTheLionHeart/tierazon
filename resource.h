@@ -360,7 +360,6 @@
 #define ID_OPTIONS_20                   33041
 #define ID_DRAW_UNDO                    33042
 #define ID_FILTER_50                    33043
-#define ID_LOAD_DLL                     33044
 #define ID_FILTER_51                    33045
 #define ID_FILTER_52                    33046
 #define ID_COLOR_REGULAR                33047

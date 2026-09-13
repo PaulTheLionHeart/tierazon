@@ -66,6 +66,27 @@
     <ClCompile Include="Xysize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Default.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rsx_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rsx_math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rsx_cplx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rsx_filt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rsx_fdim.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rsxcolor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Tierazon.rc">
@@ -107,6 +128,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Unique.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Default.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rsx_file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cmplx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

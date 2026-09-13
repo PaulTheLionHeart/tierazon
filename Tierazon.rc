@@ -165,7 +165,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Save Parameters",             ID_FILE_SAVEPARAMETERS
         MENUITEM "Load Parameters",             ID_FILE_LOADPARAMETERS
-        MENUITEM "Load DLL File",               ID_LOAD_DLL
         MENUITEM SEPARATOR
         MENUITEM "Save Colors",                 ID_FILE_SAVECOLORS
         MENUITEM "Load Colors",                 ID_FILE_LOADCOLORS
