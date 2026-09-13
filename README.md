@@ -38,9 +38,10 @@ Open:
 
 ```text
 Tierazon.sln
+```
 
 ## Historical note
-```
+
 
 Tierazon was created by Stephen C. Ferguson and represents an important part of the early Windows fractal-generation era.
 
