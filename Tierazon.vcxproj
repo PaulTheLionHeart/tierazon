@@ -233,43 +233,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Cmplx.cpp" />
-    <ClCompile Include="ColorMethods.cpp" />
-    <ClCompile Include="Convolut.cpp" />
-    <ClCompile Include="Default.cpp" />
-    <ClCompile Include="Dib.cpp" />
-    <ClCompile Include="Formulae.cpp" />
-    <ClCompile Include="Fparams.cpp" />
-    <ClCompile Include="gradient.cpp" />
-    <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="Movie.cpp" />
-    <ClCompile Include="Orient.cpp" />
-    <ClCompile Include="Pattern.cpp" />
-    <ClCompile Include="rsxcolor.cpp">
+    <ClCompile Include="src\Cmplx.cpp" />
+    <ClCompile Include="src\ColorMethods.cpp" />
+    <ClCompile Include="src\Convolut.cpp" />
+    <ClCompile Include="src\Default.cpp" />
+    <ClCompile Include="src\Dib.cpp" />
+    <ClCompile Include="src\Formulae.cpp" />
+    <ClCompile Include="src\Fparams.cpp" />
+    <ClCompile Include="src\gradient.cpp" />
+    <ClCompile Include="src\MainFrm.cpp" />
+    <ClCompile Include="src\Movie.cpp" />
+    <ClCompile Include="src\Orient.cpp" />
+    <ClCompile Include="src\Pattern.cpp" />
+    <ClCompile Include="src\rsxcolor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="rsx_cplx.cpp">
+    <ClCompile Include="src\rsx_cplx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="rsx_fdim.cpp">
+    <ClCompile Include="src\rsx_fdim.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="rsx_file.cpp">
+    <ClCompile Include="src\rsx_file.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="rsx_filt.cpp">
+    <ClCompile Include="src\rsx_filt.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="rsx_math.cpp">
+    <ClCompile Include="src\rsx_math.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="StdAfx.cpp">
+    <ClCompile Include="src\StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
@@ -279,39 +279,39 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Tierazon.cpp" />
-    <ClCompile Include="TierazonDoc.cpp" />
-    <ClCompile Include="TierazonView.cpp" />
-    <ClCompile Include="Unique.cpp" />
-    <ClCompile Include="Xysize.cpp" />
+    <ClCompile Include="src\Tierazon.cpp" />
+    <ClCompile Include="src\TierazonDoc.cpp" />
+    <ClCompile Include="src\TierazonView.cpp" />
+    <ClCompile Include="src\Unique.cpp" />
+    <ClCompile Include="src\Xysize.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Tierazon.rc" />
+    <ResourceCompile Include="src\Tierazon.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ChildFrm.h" />
-    <ClInclude Include="cmplx.h" />
-    <ClInclude Include="Default.h" />
-    <ClInclude Include="Dib.h" />
-    <ClInclude Include="Expression.h" />
-    <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="Movie.h" />
-    <ClInclude Include="Orient.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="rsx_file.h" />
-    <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="Tierazon.h" />
-    <ClInclude Include="TierazonDoc.h" />
-    <ClInclude Include="TierazonView.h" />
-    <ClInclude Include="Unique.h" />
+    <ClInclude Include="src\ChildFrm.h" />
+    <ClInclude Include="src\cmplx.h" />
+    <ClInclude Include="src\Default.h" />
+    <ClInclude Include="src\Dib.h" />
+    <ClInclude Include="src\Expression.h" />
+    <ClInclude Include="src\MainFrm.h" />
+    <ClInclude Include="src\Movie.h" />
+    <ClInclude Include="src\Orient.h" />
+    <ClInclude Include="src\Resource.h" />
+    <ClInclude Include="src\rsx_file.h" />
+    <ClInclude Include="src\StdAfx.h" />
+    <ClInclude Include="src\Tierazon.h" />
+    <ClInclude Include="src\TierazonDoc.h" />
+    <ClInclude Include="src\TierazonView.h" />
+    <ClInclude Include="src\Unique.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="icon1.ico" />
-    <Image Include="icon2.ico" />
+    <Image Include="src\icon1.ico" />
+    <Image Include="src\icon2.ico" />
     <Image Include="res\Tierazon.ico" />
     <Image Include="res\TierazonDoc.ico" />
     <Image Include="res\Toolbar.bmp" />
-    <Image Include="Toolbar.bmp" />
+    <Image Include="src\Toolbar.bmp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="res\Tierazon.rc2" />
